@@ -35,14 +35,16 @@ void loadGameLib()
 {
 #ifdef WINDOWS
   static const char *dllPath = "./out/libgamelib.dll";
+  static const char *dllCopyPath = "./out/libgamelib-copy.dll";
 #elif defined MACOS
   static const char *dllPath = "./out/libgamelib.dylib";
 #endif
   time_t currentModTime = getFileModTime(dllPath);
 
-  if (currentModTime == 0)
+  if (currentModTime <= 0)
   {
-    fprintf(stderr, "Failed to get mod time for %s\n", dllPath);
+    printf("Failed to find game dll");
+    exit(1);
     return;
   }
 
@@ -56,7 +58,13 @@ void loadGameLib()
       gameTick = NULL;
     }
 
-    gameLib = LoadLibrary(dllPath);
+    Sleep(100);
+
+    CopyFile(dllPath, dllCopyPath, FALSE);
+
+    Sleep(100);
+
+    gameLib = LoadLibrary(dllCopyPath);
 
     if (!gameLib)
     {
@@ -67,7 +75,7 @@ void loadGameLib()
     gameTick = (tickFuncT)GetProcAddress(gameLib, "gameTick");
 
     lastModTime = currentModTime;
-    printf("Reloaded DLL at %ld\n", lastModTime);
+    printf("Reloaded DLL at %lld\n", lastModTime);
 #elif defined MACOS
     if (handle)
     {
@@ -96,7 +104,7 @@ void loadGameLib()
       else
       {
         lastModTime = currentModTime;
-        printf("Reloaded DLL at %ld\n", lastModTime);
+        printf("Reloaded DLL at %lld\n", lastModTime);
       }
     }
 #endif

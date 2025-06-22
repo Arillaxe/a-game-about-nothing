@@ -1,5 +1,3 @@
-OS = WINDOWS
-
 CC = gcc
 CFLAGS = -I./include -Wall
 LDFLAGS = -L./bin
@@ -12,19 +10,16 @@ OUT_DIR = out
 
 GAME_SRC = $(wildcard src/game/*.c)
 
-ifeq ($(OS),WINDOWS)
+ifeq ($(OS),Windows_NT)
 	OUT := $(OUT).exe
 	OUT_GAME := $(OUT_GAME).dll
 	LDFLAGS += -lraylib -lopengl32 -lgdi32 -lwinmm
 	LDFLAGS_SHARED += -shared -lraylib -lopengl32 -lgdi32 -lwinmm
-endif
-ifeq ($(OS),MACOS)
+else
 	OUT_GAME := $(OUT_GAME).dylib
 	LDFLAGS += -lraylib.550 -Wl,-rpath,@loader_path/../bin -framework Cocoa -framework IOKit -framework CoreFoundation -framework CoreVideo -framework OpenGL
 	LDFLAGS_SHARED += -dynamiclib -lraylib.550 -Wl,-rpath,@loader_path/../bin -framework Cocoa -framework IOKit -framework CoreFoundation -framework CoreVideo -framework OpenGL
 endif
-
-
 
 .PHONY: game
 
@@ -36,7 +31,7 @@ make_dirs:
 $(OUT_DIR)/$(OUT): $(SRC)
 	$(CC) $(SRC) -o $(OUT_DIR)/$(OUT) $(CFLAGS) $(LDFLAGS)
 
-ifeq ($(OS),WINDOWS)
+ifeq ($(OS),Windows_NT)
 $(OUT_DIR)/$(OUT_GAME): $(GAME_SRC) $(OUT_DIR)/raylib.dll
 else
 $(OUT_DIR)/$(OUT_GAME): $(GAME_SRC)
@@ -49,7 +44,7 @@ main: make_dirs
 game: make_dirs
 	make $(OUT_DIR)/$(OUT_GAME)
 
-ifeq ($(OS),WINDOWS)
+ifeq ($(OS),Windows_NT)
 
 $(OUT_DIR)/raylib.dll:
 	cmd /c copy .\bin\raylib.dll .\out\
