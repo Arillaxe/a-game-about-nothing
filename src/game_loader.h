@@ -94,10 +94,13 @@ typedef struct tagBITMAPINFOHEADER
 #include "time.h"
 #include "stdlib.h"
 
-typedef void (*tickFuncT)();
+typedef void (*tickFuncT)(void *gameState);
+typedef void *(*initGameStateFuncT)(void);
 
 void loadGameLib();
 
 void unloadGameLib();
 
 tickFuncT getGameTickFunc();
+
+initGameStateFuncT getInitGameStateFunc();

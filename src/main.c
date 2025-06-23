@@ -1,6 +1,5 @@
-#include "game_loader.h"
-#include "game/game.h"
 #include <raylib.h>
+#include "game_loader.h"
 #include "globals.h"
 
 int main()
@@ -8,6 +7,12 @@ int main()
   SetConfigFlags(FLAG_WINDOW_HIGHDPI);
   InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "FPS Test");
   SetTargetFPS(60);
+
+  loadGameLib();
+
+  initGameStateFuncT initGameState = getInitGameStateFunc();
+
+  void *gameState = initGameState();
 
   while (!WindowShouldClose())
   {
@@ -17,7 +22,7 @@ int main()
 
     if (gameTick)
     {
-      gameTick();
+      gameTick(&gameState);
     }
   }
 

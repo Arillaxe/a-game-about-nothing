@@ -1,9 +1,13 @@
 #include "game.h"
 
-EXPORT void gameTick()
+EXPORT void gameTick(GameState *gameState)
 {
+  setGameState(gameState);
+
   BeginDrawing();
   ClearBackground(RAYWHITE);
+
+  drawLevel();
 
   DrawFPS(10, 10);
 

@@ -16,6 +16,9 @@
     "_cygwin.h": "c",
     "vadefs.h": "c",
     "_mingw_ddk.h": "c",
-    "winresrc.h": "c"
+    "winresrc.h": "c",
+    "game_state.h": "c",
+    "level.h": "c",
+    "level_generator.h": "c"
   }
 }

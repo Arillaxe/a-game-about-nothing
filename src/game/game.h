@@ -14,4 +14,7 @@
 
 #include "ui.h"
 
-void gameTick();
+#include "level.h"
+#include "game_state.h"
+
+void gameTick(GameState *gameState);

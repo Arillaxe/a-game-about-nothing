@@ -1,6 +1,7 @@
 #include "game_loader.h"
 
 static tickFuncT gameTick = NULL;
+static initGameStateFuncT initGameState = NULL;
 static time_t lastModTime = 0;
 
 #ifdef WINDOWS
@@ -73,6 +74,7 @@ void loadGameLib()
     }
 
     gameTick = (tickFuncT)GetProcAddress(gameLib, "gameTick");
+    initGameState = (initGameStateFuncT)GetProcAddress(gameLib, "initGameState");
 
     lastModTime = currentModTime;
     printf("Reloaded DLL at %lld\n", lastModTime);
@@ -130,4 +132,9 @@ void unloadGameLib()
 tickFuncT getGameTickFunc()
 {
   return gameTick;
+}
+
+initGameStateFuncT getInitGameStateFunc()
+{
+  return initGameState;
 }
