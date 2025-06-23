@@ -19,6 +19,7 @@
     "winresrc.h": "c",
     "game_state.h": "c",
     "level.h": "c",
-    "level_generator.h": "c"
+    "level_generator.h": "c",
+    "perlin.h": "c"
   }
 }

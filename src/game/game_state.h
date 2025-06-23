@@ -1,15 +1,16 @@
 #pragma once
 
 #include <raylib.h>
-#include "level.h"
 #include "stdlib.h"
-#include "level_generator.h"
-#include "game.h"
+#include "export.h"
+
+// Forward declaration to avoid circular dependency
+struct GameState;
 
 typedef struct GameState
 {
-  Level level;
   Camera2D camera;
+  Vector2 playerPos; // Track player position for chunk loading
 } GameState;
 
 EXPORT GameState *initGameState();

@@ -84,6 +84,7 @@ void loadGameLib()
       dlclose(handle);
       handle = NULL;
       gameTick = NULL;
+      initGameState = NULL;
     }
 
     handle = dlopen(dllPath, RTLD_LAZY);
@@ -95,6 +96,7 @@ void loadGameLib()
     else
     {
       gameTick = (tickFuncT)dlsym(handle, "gameTick");
+      initGameState = (initGameStateFuncT)dlsym(handle, "initGameState");
       char *error = dlerror();
       if (error != NULL)
       {
@@ -102,11 +104,12 @@ void loadGameLib()
         dlclose(handle);
         handle = NULL;
         gameTick = NULL;
+        initGameState = NULL;
       }
       else
       {
         lastModTime = currentModTime;
-        printf("Reloaded DLL at %lld\n", lastModTime);
+        printf("Reloaded DLL at %ld\n", lastModTime);
       }
     }
 #endif
@@ -126,6 +129,7 @@ void unloadGameLib()
   dlclose(handle);
   handle = NULL;
   gameTick = NULL;
+  initGameState = NULL;
 #endif
 }
 

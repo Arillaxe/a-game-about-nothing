@@ -1,17 +1,19 @@
 #pragma once
 
-#define WORLD_SIZE 64
+#define WORLD_SIZE 256
 
-#define TILE_SIZE 16
+#define TILE_SIZE 4
 
 #include "raylib.h"
-#include "game_state.h"
 #include "math.h"
 
 typedef enum TileType
 {
   TILE_AIR,
+  TILE_DIRT,
   TILE_ROCK,
+  TILE_WATER,
+  TILE_LAVA,
 } TileType;
 
 typedef struct Level
